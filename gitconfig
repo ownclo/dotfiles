@@ -1,0 +1,22 @@
+[merge]
+	tool = fugitive
+[core]
+	editor = vi 
+[user]
+	name = Ownclo - Arcis
+	email = mrownclo@gmail.com
+[alias]
+    co = commit
+	c = checkout
+    st = status -sb
+	tr = log --graph --full-history --all --color --pretty=format:\"%Cred%x09%h%Creset  %s%Creset %C(magenta)(%ar)%Creset%Cgreen%d %Creset\"
+    hd = log -1
+    aa = add --all
+    dc = diff --cached
+    untracked = ls-files . --exclude-standard --others
+[color]
+	ui = true
+[push]
+	default = matching
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
