@@ -77,10 +77,10 @@ EMW="\[\033[1;37m\]"
 TIME=$(date +%H:%M)
 
 function parse_git_branch {
-git branch --no-color 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \(\1\)/'
+git branch --no-color 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\(\1\)/'
 }
 
-PS1="${debian_chroot:+($debian_chroot)}\h:$EMB\W$NONE\$(parse_git_branch)\$ "
+PS1="${debian_chroot:+($debian_chroot)}\$(parse_git_branch)$EMW➤$NONE "
 #set color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -109,7 +109,6 @@ alias la='ls -A'
 alias l='ls -CF'
 
 alias ack='ack-grep --color'
-alias v='vim'
 alias sc='screen'
 alias gv='gvim'
 
@@ -137,7 +136,7 @@ export EDITOR='vim'
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 alias 6='vim'
-alias python='python3'
+#alias python='python3'
 
 # Maps CAPS to ESC, that's the vim way to do stuff
 xmodmap ~/.mapCapsToEsc
@@ -150,6 +149,37 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-. ~/.rvm/scripts/rvm
-export PATH="/usr/local/bin:/usr/local/sbin/:/usr/local/mysql/bin:$PATH"
-export PATH=/opt/qt5/bin:$PATH
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+## SOME CRAZY FUNCTIONS
+# LS after CD
+function cd ()
+{
+    if [ $# -eq 0 ]; then
+        builtin cd && ls
+    else
+        builtin cd "$*" && ls
+    fi
+}
+
+# g as GIT STATUS
+function g ()
+{
+    if [[ $# > 0 ]]
+    then
+        git $@
+    else
+        git status -sb
+    fi
+}
+
+# v as vim -S is session is present
+function v ()
+{
+    if [ -f Session.vim ]; then
+        vim -S
+    else
+        vim
+    fi
+}
