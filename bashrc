@@ -177,9 +177,15 @@ function g ()
 # v as vim -S is session is present
 function v ()
 {
-    if [ -f Session.vim ]; then
-        vim -S
+    if [[ $# == 0 ]]
+    then
+        if [ -f Session.vim ]
+        then
+            vim -S
+        else
+            vim
+        fi
     else
-        vim
+        vim $@
     fi
 }
