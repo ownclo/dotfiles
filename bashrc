@@ -94,7 +94,7 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls='ls --color=auto --width=80'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -109,8 +109,8 @@ alias la='ls -A'
 alias l='ls -CF'
 
 alias ack='ack-grep --color'
-alias sc='screen'
-alias gv='gvim'
+alias cx='xdg-open'
+alias s='subl &' # Sublime Text 2
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -187,5 +187,17 @@ function v ()
         fi
     else
         vim $@
+    fi
+}
+
+# Make a directory and cd to it.
+# NOTE: works for one name only.
+function md ()
+{
+    if [[ $# == 0 ]]
+    then
+        echo "Make directory and cd to it"
+    else
+        mkdir $1 && cd $1
     fi
 }
