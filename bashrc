@@ -111,6 +111,8 @@ alias l='ls -CF'
 alias ack='ack-grep --color'
 alias cx='xdg-open'
 alias s='subl &' # Sublime Text 2
+# cd's to git root directory (up)
+alias root='cd "$(git rev-parse --show-toplevel)"'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -136,6 +138,7 @@ export EDITOR='vim'
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 alias 6='vim'
+alias gg='git grep'
 #alias python='python3'
 
 # Maps CAPS to ESC, that's the vim way to do stuff
